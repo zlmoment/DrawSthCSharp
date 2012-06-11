@@ -1,0 +1,10 @@
+C:\drawsomething\project\DrawSomething\DrawSomething\bin\Debug\DrawSomething.exe
+C:\drawsomething\project\DrawSomething\DrawSomething\bin\Debug\DrawSomething.pdb
+C:\drawsomething\project\DrawSomething\DrawSomething\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\drawsomething\project\DrawSomething\DrawSomething\obj\x86\Debug\DrawSomething.LoginForm.resources
+C:\drawsomething\project\DrawSomething\DrawSomething\obj\x86\Debug\DrawSomething.Properties.Resources.resources
+C:\drawsomething\project\DrawSomething\DrawSomething\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\drawsomething\project\DrawSomething\DrawSomething\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\drawsomething\project\DrawSomething\DrawSomething\obj\x86\Debug\DrawSomething.exe
+C:\drawsomething\project\DrawSomething\DrawSomething\obj\x86\Debug\DrawSomething.pdb
+C:\drawsomething\project\DrawSomething\DrawSomething\obj\x86\Debug\DrawSomething.MainForm.resources
