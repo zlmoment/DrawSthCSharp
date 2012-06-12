@@ -56,7 +56,7 @@ namespace DrawSomething
             if (isTracingNow == false)
             {
                 isTracingNow = true;
-                this.label_status.Text = "begin tracing";
+                this.label_status.Text = "正在记录";
                 traceToXML.addNewSection(penColor.ToArgb().ToString(),penWidth.ToString());
             }
 
@@ -75,7 +75,7 @@ namespace DrawSomething
             if (isTracingNow == true)
             {
                 isTracingNow = false;
-                this.label_status.Text = "end tracing";
+                this.label_status.Text = "结束记录";
             }
         }
 

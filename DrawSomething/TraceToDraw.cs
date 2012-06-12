@@ -68,21 +68,28 @@ namespace DrawSomething
             pointOfSectionTotalCount = ite2.Count+1;
             if (pointOfSectionNowCount.Equals(pointOfSectionTotalCount))
             {
-                ite.MoveNext();
-                this.penColor = Color.FromArgb(int.Parse(ite.Current.GetAttribute("penColor", "")));
-                this.penWidth = int.Parse(ite.Current.GetAttribute("penWidth", ""));
+                if (ite.MoveNext())
+                {
+                    this.penColor = Color.FromArgb(int.Parse(ite.Current.GetAttribute("penColor", "")));
+                    this.penWidth = int.Parse(ite.Current.GetAttribute("penWidth", ""));
 
-                ite2 = ite.Current.Select("Point");
-                ite2.MoveNext();
-                pointOfSectionNowCount = 1;
+                    ite2 = ite.Current.Select("Point");
+                    ite2.MoveNext();
+                    pointOfSectionNowCount = 1;
 
-                int x_point = int.Parse(ite2.Current.SelectSingleNode("X").Value);
-                int y_point = int.Parse(ite2.Current.SelectSingleNode("Y").Value);
-                currentPoint = new Point(x_point, y_point);
-                drawingLine = new Line(currentPoint);
-                drawingLine.penColor = this.penColor;
-                drawingLine.penWidth = this.penWidth;
-                lines.Add(drawingLine);
+                    int x_point = int.Parse(ite2.Current.SelectSingleNode("X").Value);
+                    int y_point = int.Parse(ite2.Current.SelectSingleNode("Y").Value);
+                    currentPoint = new Point(x_point, y_point);
+                    drawingLine = new Line(currentPoint);
+                    drawingLine.penColor = this.penColor;
+                    drawingLine.penWidth = this.penWidth;
+                    lines.Add(drawingLine);
+                } 
+                else
+                {
+                    timer2.Enabled = false;
+                    MessageBox.Show("绘制完成，计时器已关闭。");
+                }
             }
             
             

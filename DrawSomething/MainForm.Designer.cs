@@ -48,7 +48,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(554, 12);
+            this.button1.Location = new System.Drawing.Point(564, 17);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -58,7 +58,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(646, 12);
+            this.button2.Location = new System.Drawing.Point(664, 17);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
@@ -70,7 +70,7 @@
             // 
             this.mainPanel.BackColor = System.Drawing.Color.White;
             this.mainPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.mainPanel.Location = new System.Drawing.Point(12, 50);
+            this.mainPanel.Location = new System.Drawing.Point(30, 57);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(709, 337);
             this.mainPanel.TabIndex = 2;
@@ -81,16 +81,15 @@
             // 
             // panel1
             // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.comboBox1);
             this.panel1.Controls.Add(this.button7);
             this.panel1.Controls.Add(this.button6);
             this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button3);
-            this.panel1.Location = new System.Drawing.Point(12, 403);
+            this.panel1.Location = new System.Drawing.Point(30, 435);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(709, 65);
+            this.panel1.Size = new System.Drawing.Size(709, 66);
             this.panel1.TabIndex = 3;
             // 
             // comboBox1
@@ -118,9 +117,9 @@
             // 
             this.button7.BackColor = System.Drawing.Color.Black;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Location = new System.Drawing.Point(429, 20);
+            this.button7.Location = new System.Drawing.Point(429, 23);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(47, 25);
+            this.button7.Size = new System.Drawing.Size(47, 20);
             this.button7.TabIndex = 4;
             this.button7.UseVisualStyleBackColor = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);
@@ -167,37 +166,42 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 50;
+            this.timer1.Interval = 30;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // label_status
             // 
             this.label_status.AutoSize = true;
-            this.label_status.Location = new System.Drawing.Point(12, 22);
+            this.label_status.BackColor = System.Drawing.Color.Transparent;
+            this.label_status.ForeColor = System.Drawing.Color.Black;
+            this.label_status.Location = new System.Drawing.Point(28, 22);
             this.label_status.Name = "label_status";
-            this.label_status.Size = new System.Drawing.Size(41, 12);
+            this.label_status.Size = new System.Drawing.Size(53, 12);
             this.label_status.TabIndex = 4;
-            this.label_status.Text = "label1";
+            this.label_status.Text = "状态指示";
             // 
             // timer2
             // 
-            this.timer2.Interval = 50;
+            this.timer2.Interval = 30;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(735, 480);
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(777, 539);
             this.Controls.Add(this.label_status);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Main";
+            this.Text = "你画我猜";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
             this.panel1.ResumeLayout(false);
