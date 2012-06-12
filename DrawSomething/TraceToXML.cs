@@ -1,4 +1,5 @@
 ﻿//用来记录绘图过程为xml流
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,12 @@ namespace DrawSomething
             //创建 Section 的子节点 Point
             XmlElement elementPoint = xmlDocument.CreateElement("Point");
             elementPoint.SetAttribute("time", "0");
-            elementPoint.InnerText = beginPoint.ToString();
+            XmlElement elementX = xmlDocument.CreateElement("X");
+            elementX.InnerText = beginPoint.X.ToString();
+            elementPoint.AppendChild(elementX);
+            XmlElement elementY = xmlDocument.CreateElement("Y");
+            elementY.InnerText = beginPoint.Y.ToString();
+            elementPoint.AppendChild(elementY);
             elementSection.AppendChild(elementPoint);
         }
 
@@ -54,7 +60,12 @@ namespace DrawSomething
             //创建 Section 的子节点 Point
             XmlElement elementPoint = xmlDocument.CreateElement("Point");
             elementPoint.SetAttribute("time", traceTime);
-            elementPoint.InnerText = tracePoint.ToString();
+            XmlElement elementX = xmlDocument.CreateElement("X");
+            elementX.InnerText = tracePoint.X.ToString();
+            elementPoint.AppendChild(elementX);
+            XmlElement elementY = xmlDocument.CreateElement("Y");
+            elementY.InnerText = tracePoint.Y.ToString();
+            elementPoint.AppendChild(elementY);
             elementSection.AppendChild(elementPoint);
         }
 

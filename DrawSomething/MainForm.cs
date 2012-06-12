@@ -19,8 +19,10 @@ namespace DrawSomething
 
         private bool isTracingNow = false;
         private Point pointNow;
-        private int traceTime;
+        private int traceTime = 0;
         private TraceToXML traceToXML;
+
+        private TraceToDraw traceToDraw;
         
         public MainForm()
         {
@@ -119,11 +121,14 @@ namespace DrawSomething
         {
             this.timer1.Enabled = false;
             traceToXML.finish();
+            this.traceTime = 0;
+            this.drawingLine = null;
+            this.lines = null;
             MessageBox.Show("finish");
             //MessageBox.Show(System.Environment.CurrentDirectory.ToString());
         }
 
-        //启动定时器
+        //启动用于记录轨迹的定时器
         private void timer1_Tick(object sender, EventArgs e)
         {
             this.mainPanel.Refresh();
@@ -132,6 +137,30 @@ namespace DrawSomething
             {
                 traceToXML.add(pointNow, traceTime.ToString());
             }
+        }
+
+        //用于还原绘图过程的定时器
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            
+            traceToDraw.drawit(traceTime.ToString());
+            traceTime += timer2.Interval;
+            this.drawingLine = traceToDraw.drawingLine;
+            this.lines = traceToDraw.lines;
+            this.mainPanel.Refresh();
+        }
+
+        //排行榜
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //退出程序
+        private void button2_Click(object sender, EventArgs e)
+        {
+            traceToDraw = new TraceToDraw(this.timer2, this.mainPanel);
+            traceToDraw.start();
         }
 
     }
