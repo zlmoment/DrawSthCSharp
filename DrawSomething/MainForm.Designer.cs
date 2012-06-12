@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.mainPanel = new System.Windows.Forms.Panel();
@@ -39,6 +40,8 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label_status = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,6 +74,7 @@
             this.mainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainPanel_Paint);
             this.mainPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseDown);
             this.mainPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseMove);
+            this.mainPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseUp);
             // 
             // panel1
             // 
@@ -158,11 +162,26 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 50;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // label_status
+            // 
+            this.label_status.AutoSize = true;
+            this.label_status.Location = new System.Drawing.Point(12, 22);
+            this.label_status.Name = "label_status";
+            this.label_status.Size = new System.Drawing.Size(41, 12);
+            this.label_status.TabIndex = 4;
+            this.label_status.Text = "label1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(735, 480);
+            this.Controls.Add(this.label_status);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.button2);
@@ -175,6 +194,7 @@
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -191,5 +211,7 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label_status;
     }
 }

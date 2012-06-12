@@ -8,7 +8,6 @@ namespace DrawSomething
 {
     class MyMainPanel:System.Windows.Forms.Panel
     {
-
         public MyMainPanel()
         {
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);

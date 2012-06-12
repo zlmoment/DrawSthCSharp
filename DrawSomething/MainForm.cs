@@ -16,6 +16,11 @@ namespace DrawSomething
 
         private Color penColor = Color.Black;
         private float penWidth = 1;
+
+        private bool isTracingNow = false;
+        private Point pointNow;
+        private int traceTime;
+        private TraceToXML traceToXML;
         
         public MainForm()
         {
@@ -30,7 +35,7 @@ namespace DrawSomething
 
             if (e.Button == MouseButtons.Left)
             {
-                Point pointNow = new Point(e.X, e.Y);
+                pointNow = new Point(e.X, e.Y);
                 drawingLine.Add(pointNow);
                 Invalidate();
             }
@@ -38,6 +43,21 @@ namespace DrawSomething
 
         private void mainPanel_MouseDown(object sender, MouseEventArgs e)
         {
+            //如果首次点击鼠标，打开计时器
+            if (this.timer1.Enabled == false)
+            {
+                this.timer1.Enabled = true;
+                Point beginPoint = new Point(e.X, e.Y);
+                traceToXML = new TraceToXML(beginPoint, penColor.ToArgb().ToString(), penWidth.ToString());
+            }
+
+            if (isTracingNow == false)
+            {
+                isTracingNow = true;
+                this.label_status.Text = "begin tracing";
+                traceToXML.addNewSection(penColor.ToArgb().ToString(),penWidth.ToString());
+            }
+
             if (e.Button == MouseButtons.Left)
             {
                 Point pointNow = new Point(e.X, e.Y);
@@ -45,6 +65,15 @@ namespace DrawSomething
                 drawingLine.penColor = this.penColor;
                 drawingLine.penWidth = this.penWidth;
                 lines.Add(drawingLine);
+            }
+        }
+
+        private void mainPanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (isTracingNow == true)
+            {
+                isTracingNow = false;
+                this.label_status.Text = "end tracing";
             }
         }
 
@@ -58,7 +87,7 @@ namespace DrawSomething
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
-            this.mainPanel.Refresh();
+            
         }
 
         //设置颜色
@@ -88,7 +117,22 @@ namespace DrawSomething
         //绘图完成按钮
         private void button3_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(System.Environment.CurrentDirectory.ToString());
+            this.timer1.Enabled = false;
+            traceToXML.finish();
+            MessageBox.Show("finish");
+            //MessageBox.Show(System.Environment.CurrentDirectory.ToString());
         }
+
+        //启动定时器
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            this.mainPanel.Refresh();
+            traceTime += timer1.Interval;
+            if (isTracingNow == true)
+            {
+                traceToXML.add(pointNow, traceTime.ToString());
+            }
+        }
+
     }
 }
