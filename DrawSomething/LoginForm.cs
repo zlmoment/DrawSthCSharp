@@ -69,7 +69,7 @@ namespace DrawSomething
             }
             else
             {
-                string url = @"http://172.28.11.123/~zhaoyulee/drawsomething/index.php/User/login?username="+username+@"&password="+password;
+                string url = @"http://59.65.171.223/~zhaoyulee/drawsomething/index.php/User/login?username="+username+@"&password="+password;
                 HttpWebRequest webrequest = (HttpWebRequest)HttpWebRequest.Create(url);
                 HttpWebResponse webreponse = (HttpWebResponse)webrequest.GetResponse();
                 Stream stream = webreponse.GetResponseStream();

@@ -52,6 +52,12 @@
     <Compile Include="FindPartnerForm.Designer.cs">
       <DependentUpon>FindPartnerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="InputDrawthingAgainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InputDrawthingAgainForm.Designer.cs">
+      <DependentUpon>InputDrawthingAgainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Line.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
@@ -85,6 +91,9 @@
     <Compile Include="Util.cs" />
     <EmbeddedResource Include="FindPartnerForm.resx">
       <DependentUpon>FindPartnerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InputDrawthingAgainForm.resx">
+      <DependentUpon>InputDrawthingAgainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

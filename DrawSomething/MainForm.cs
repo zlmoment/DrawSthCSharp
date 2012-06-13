@@ -26,23 +26,32 @@ namespace DrawSomething
 
         private TraceToDraw traceToDraw;
 
-        private string drawthing;
+        public string drawthing;//不要改为private
         private UserModel userModel;
         private UserModel f_userModel;
+        private string gameMode;
 
-        public MainForm(UserModel userModel, UserModel f_userModel, string drawthing, string gameMode)
+        public MainForm(UserModel userModel, UserModel f_userModel, string drawthing, string gameModeStr)
         {
             InitializeComponent();
             lines = new List<Line>();
             this.userModel = userModel;
             this.f_userModel = f_userModel;
             this.drawthing = drawthing;
+            this.gameMode = gameModeStr;
             if (gameMode == "guess")
             {
                 this.label_friendinfo.Text = "您正在猜，字符长度为 "+drawthing.Length.ToString() + " ，猜对可得10分。";
+                this.label_senderinfo.Text = "这幅图来自 " + Util.getsenderusername(userModel.uid) + " ,答案长度为 " + drawthing.Length.ToString();
                 this.label_score.Text = userModel.score;
+                this.label_status.Visible = false;
                 this.panel1.Visible = false;
                 this.panel2.Visible = true;
+                this.panel3.Visible = false;
+                this.panel4.Visible = false;
+                this.label1.Visible = false;
+                this.textBox1.Visible = false;
+                this.button8.Visible = false;
             } 
             else
             {
@@ -50,57 +59,68 @@ namespace DrawSomething
                 this.label_score.Text = userModel.score;
                 this.panel1.Visible = true;
                 this.panel2.Visible = false;
+                this.panel3.Visible = false;
+                this.panel4.Visible = false;
             }
         }
 
 
         private void mainPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            string x_point = e.X.ToString();
-            string y_point = e.Y.ToString();
-
-            if (e.Button == MouseButtons.Left)
+            if (gameMode == "draw")
             {
-                pointNow = new Point(e.X, e.Y);
-                drawingLine.Add(pointNow);
-                Invalidate();
+                string x_point = e.X.ToString();
+                string y_point = e.Y.ToString();
+
+                if (e.Button == MouseButtons.Left)
+                {
+                    pointNow = new Point(e.X, e.Y);
+                    drawingLine.Add(pointNow);
+                    Invalidate();
+                }
             }
         }
 
         private void mainPictureBox_MouseDown(object sender, MouseEventArgs e)
         {
-            //如果首次点击鼠标，打开计时器
-            if (this.timer1.Enabled == false)
+            if (gameMode == "draw")
             {
-                this.traceTime = 0;
-                this.timer1.Enabled = true;
-                Point beginPoint = new Point(e.X, e.Y);
-                traceToXML = new TraceToXML(beginPoint, penColor.ToArgb().ToString(), penWidth.ToString());
-            }
+                //如果首次点击鼠标，打开计时器
+                if (this.timer1.Enabled == false)
+                {
+                    this.traceTime = 0;
+                    this.timer1.Enabled = true;
+                    Point beginPoint = new Point(e.X, e.Y);
+                    traceToXML = new TraceToXML(beginPoint, penColor.ToArgb().ToString(), penWidth.ToString());
+                }
 
-            if (isTracingNow == false)
-            {
-                isTracingNow = true;
-                this.label_status.Text = "正在记录";
-                traceToXML.addNewSection(penColor.ToArgb().ToString(), penWidth.ToString());
-            }
+                if (isTracingNow == false)
+                {
+                    isTracingNow = true;
+                    this.label_status.Text = "正在记录";
+                    traceToXML.addNewSection(penColor.ToArgb().ToString(), penWidth.ToString());
+                }
 
-            if (e.Button == MouseButtons.Left)
-            {
-                pointNow = new Point(e.X, e.Y);
-                drawingLine = new Line(pointNow);
-                drawingLine.penColor = this.penColor;
-                drawingLine.penWidth = this.penWidth;
-                lines.Add(drawingLine);
+                if (e.Button == MouseButtons.Left)
+                {
+                    pointNow = new Point(e.X, e.Y);
+                    drawingLine = new Line(pointNow);
+                    drawingLine.penColor = this.penColor;
+                    drawingLine.penWidth = this.penWidth;
+                    lines.Add(drawingLine);
+                }
             }
         }
 
         private void mainPictureBox_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isTracingNow == true)
+            if (gameMode == "draw")
             {
-                isTracingNow = false;
-                this.label_status.Text = "结束记录";
+                if (isTracingNow == true)
+                {
+                    isTracingNow = false;
+                    this.label_status.Text = "结束记录";
+                }
             }
         }
 
@@ -148,14 +168,19 @@ namespace DrawSomething
             this.timer1.Enabled = false;
             traceToXML.finish();
             this.traceTime = 0;
-            this.drawingLine = null;
-            this.lines = null;
+            //this.drawingLine = null;
+            //this.lines = null;
 
             //开始发送到服务器
             bool result = this.sendToServerPost();
             if (result == true)
             {
                 MessageBox.Show("恭喜，发送成功！");
+                //关闭定时器
+                this.timer1.Enabled = false;
+                //切换panel
+                this.panel4.Visible = true;
+                this.panel1.Visible = false;
             }
             else
             {
@@ -194,7 +219,7 @@ namespace DrawSomething
         //退出程序
         private void button2_Click(object sender, EventArgs e)
         {
-            
+            this.Dispose();
         }
 
         private bool sendToServerPost()
@@ -205,7 +230,7 @@ namespace DrawSomething
 
                 Encoding encode = Encoding.GetEncoding("utf-8");
                 string postData = "sender_uid=" + userModel.uid + "&receiver_uid=" + f_userModel.uid + "&drawthing=" + drawthing + "&xmlbody=" + xmlbody;
-                string strURL = @"http://172.28.11.123/~zhaoyulee/drawsomething/index.php/drawinfo/addnewdraw";
+                string strURL = @"http://59.65.171.223/~zhaoyulee/drawsomething/index.php/drawinfo/addnewdraw";
 
                 byte[] data = encode.GetBytes(postData);
                 HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(strURL);
@@ -237,14 +262,29 @@ namespace DrawSomething
                 MessageBox.Show("异常：失败。"+ex.Message);
                 return false;
             }
-
         }
 
         //开始绘制
         private void button9_Click(object sender, EventArgs e)
         {
-            traceToDraw = new TraceToDraw(this.timer2, this.mainPictureBox, userModel.uid);
+            this.traceTime = 0;
+            this.label1.Visible = false;
+            this.textBox1.Visible = false;
+            this.button8.Visible = false;
+            this.button9.Text = "正在绘制...";
+            this.button9.Enabled = false;
+            traceToDraw = new TraceToDraw(this, this.timer2, this.mainPictureBox, userModel.uid);
             traceToDraw.start();
+        }
+
+        //还原过程完毕后的回调函数
+        public void traceToDrawFinish()
+        {
+            this.label1.Visible = true;
+            this.textBox1.Visible = true;
+            this.button8.Visible = true;
+            this.button9.Text = "再次绘制";
+            this.button9.Enabled = true;
         }
 
         //猜测答案按钮
@@ -253,7 +293,48 @@ namespace DrawSomething
             string myAnswer = this.textBox1.Text;
             if (myAnswer == drawthing)
             {
-                MessageBox.Show("猜对了！");
+                int nowScore = int.Parse(this.label_score.Text);
+                int newScore = nowScore + 10;
+                this.label_score.Text = newScore.ToString();
+                if (Util.setQuenuDone(userModel.uid) == true)
+                {
+                    if (Util.updatemyscore(userModel.uid, newScore.ToString()) == true)
+                    {
+                        MessageBox.Show("猜对了！你得了10分！");
+                        userModel.score = newScore.ToString();
+                        //然后检测是否还有未猜的画，如果有，提醒用户是否继续
+                        if (int.Parse(Util.getmydrawnum(userModel.uid)) > 0)
+                        {
+                            if (MessageBox.Show("您还有未猜的图画，是否继续猜？", "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                            {
+                                drawthing = Util.getdrawthing(userModel.uid);
+                                this.label_friendinfo.Text = "您正在猜，字符长度为 " + drawthing.Length.ToString() + " ，猜对可得10分。";
+                                this.label_senderinfo.Text = "这幅图来自 " + Util.getsenderusername(userModel.uid) + " ,答案长度为 " + drawthing.Length.ToString();
+                                this.label_score.Text = userModel.score;
+                                this.button9.Text = "开始绘制";
+                                this.panel1.Visible = false;
+                                this.panel2.Visible = true;
+                                this.panel3.Visible = false;
+                                this.panel4.Visible = false;
+                                this.label1.Visible = false;
+                                this.textBox1.Visible = false;
+                                this.button8.Visible = false;
+                            }
+                            else
+                            {
+                                this.panel3.Visible = true;
+                            }
+                        }
+                        else
+                        {
+                            this.panel3.Visible = true;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("网络连接出错，请重试。");
+                }
             } 
             else
             {
@@ -262,5 +343,40 @@ namespace DrawSomething
             }
         }
 
+        //退出
+        private void button11_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+
+        //我要给别人画 按钮：回到寻找好友的界面
+        private void button10_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+            FindPartnerForm findPartnerForm = new FindPartnerForm(userModel);
+            findPartnerForm.Show();
+        }
+
+        //再画一幅 ：要再次输入画什么，并且一些参数要复位
+        private void button13_Click(object sender, EventArgs e)
+        {
+            InputDrawthingAgainForm inputDTAgainForm = new InputDrawthingAgainForm(this);
+            inputDTAgainForm.ShowDialog();
+            lines = new List<Line>();
+            this.label_friendinfo.Text = "您正在画 " + drawthing + " 给 " + f_userModel.username;
+            this.label_score.Text = userModel.score;
+            this.panel1.Visible = true;
+            this.panel2.Visible = false;
+            this.panel3.Visible = false;
+            this.panel4.Visible = false;
+        }
+
+        //重新选择好友 按钮：回到寻找好友的界面 
+        private void button12_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+            FindPartnerForm findPartnerForm = new FindPartnerForm(userModel);
+            findPartnerForm.Show();
+        }
     }
 }

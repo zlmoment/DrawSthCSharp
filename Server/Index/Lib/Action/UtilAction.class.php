@@ -16,4 +16,17 @@ class UtilAction extends Action {
     	 	echo "0";
     	 }
     }
+    
+    //得到排行榜 
+    public function gettoplist()
+    {
+    	$User = M ( "User" );
+    	$result = $User->order("score DESC")->limit('5')->select();
+    	//var_dump($result);
+    	foreach ($result as $result_single) {
+    		$result_back .= ($result_single["username"].",".$result_single["score"].",");
+		}
+		$result_back = substr($result_back,0,strlen($result_back)-1);
+		echo $result_back;
+    }
 }

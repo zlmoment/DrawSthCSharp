@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.XPath;
+using System.IO;
 
 namespace DrawSomething
 {
@@ -31,9 +32,11 @@ namespace DrawSomething
         public Point currentPoint;
 
         private string uid;
+        private MainForm mainForm;
 
-        public TraceToDraw(Timer timer2, PictureBox mainPictureBox, string uid)
+        public TraceToDraw(MainForm mainForm, Timer timer2, PictureBox mainPictureBox, string uid)
         {
+            this.mainForm = mainForm;
             this.timer2 = timer2;
             this.mainPictureBox = mainPictureBox;
             this.uid = uid;
@@ -42,8 +45,9 @@ namespace DrawSomething
 
         public void start()
         {
+            string xmlbody = Util.getdrawxml(uid);
+            File.WriteAllText(System.Environment.CurrentDirectory.ToString() + "\\Trace.xml", xmlbody, Encoding.UTF8);
             doc = new XPathDocument(System.Environment.CurrentDirectory.ToString() + "\\Trace.xml");
-            //doc = new XPathDocument(Util.getdrawxml(uid));
             nav = doc.CreateNavigator();
             ite = nav.Select("//Section");
 
@@ -92,7 +96,8 @@ namespace DrawSomething
                 else
                 {
                     timer2.Enabled = false;
-                    MessageBox.Show("绘制完成，计时器已关闭。");
+                    MessageBox.Show("绘制完成。");
+                    mainForm.traceToDrawFinish();
                 }
             }
             

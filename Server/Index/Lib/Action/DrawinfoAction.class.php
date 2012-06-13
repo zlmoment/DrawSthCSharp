@@ -25,4 +25,22 @@ class DrawinfoAction extends Action {
         	echo "false";
         }
     }
+    
+    public function setQuenuDone()
+    {
+    	$uid = $_GET['uid'];
+    	$Queun = M ( "Queun" );
+    	$map ['receiver_uid'] = $uid;
+    	$map ['isdone'] = "0";
+    	$result = $Queun->where($map)->find();
+    	$qid = $result['qid'];
+    	$Queun = M ( "Queun" );
+    	$Queun->isdone = "1";
+    	$result = $Queun->where("qid=$qid")->save();
+    	if ($result) {
+    		echo "true";
+    	} else {
+    		echo "false";
+    	}
+    }
 }
