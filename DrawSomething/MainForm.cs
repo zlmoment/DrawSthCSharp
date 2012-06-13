@@ -62,7 +62,7 @@ namespace DrawSomething
 
             if (e.Button == MouseButtons.Left)
             {
-                Point pointNow = new Point(e.X, e.Y);
+                pointNow = new Point(e.X, e.Y);
                 drawingLine = new Line(pointNow);
                 drawingLine.penColor = this.penColor;
                 drawingLine.penWidth = this.penWidth;

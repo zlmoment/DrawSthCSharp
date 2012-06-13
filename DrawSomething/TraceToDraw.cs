@@ -62,7 +62,7 @@ namespace DrawSomething
             timer2.Enabled = true;
         }
 
-        //定时器2开启后，此函数每50毫秒会被调用一次
+        //定时器2开启后，此函数每30毫秒会被调用一次
         public void drawit(string traceTime)
         {
             pointOfSectionTotalCount = ite2.Count+1;
@@ -91,7 +91,6 @@ namespace DrawSomething
                     MessageBox.Show("绘制完成，计时器已关闭。");
                 }
             }
-            
             
             string nodeTime = ite2.Current.GetAttribute("time", "");
             if (nodeTime == traceTime)
