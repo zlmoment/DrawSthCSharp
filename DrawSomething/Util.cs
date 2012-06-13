@@ -16,7 +16,7 @@ namespace DrawSomething
 
         public static string getScoreByUid(string uid)
         {
-            string url = @"http://59.65.171.223/~zhaoyulee/drawsomething/index.php/Util/getscorebyuid?uid=" + uid;
+            string url = @"http://hackecho.com/drawsomething/index.php/Util/getscorebyuid?uid=" + uid;
             HttpWebRequest webrequest = (HttpWebRequest)HttpWebRequest.Create(url);
             HttpWebResponse webreponse = (HttpWebResponse)webrequest.GetResponse();
             Stream stream = webreponse.GetResponseStream();
@@ -35,7 +35,7 @@ namespace DrawSomething
 
         public static string getmydrawnum(string uid)
         {
-            string url = @"http://59.65.171.223/~zhaoyulee/drawsomething/index.php/User/getmydrawnum?uid=" + uid;
+            string url = @"http://hackecho.com/drawsomething/index.php/User/getmydrawnum?uid=" + uid;
             HttpWebRequest webrequest = (HttpWebRequest)HttpWebRequest.Create(url);
             HttpWebResponse webreponse = (HttpWebResponse)webrequest.GetResponse();
             Stream stream = webreponse.GetResponseStream();
@@ -54,7 +54,7 @@ namespace DrawSomething
 
         public static string getdrawthing(string uid)
         {
-            string url = @"http://59.65.171.223/~zhaoyulee/drawsomething/index.php/User/getmydrawthing?uid=" + uid;
+            string url = @"http://hackecho.com/drawsomething/index.php/User/getmydrawthing?uid=" + uid;
             HttpWebRequest webrequest = (HttpWebRequest)HttpWebRequest.Create(url);
             HttpWebResponse webreponse = (HttpWebResponse)webrequest.GetResponse();
             Stream stream = webreponse.GetResponseStream();
@@ -73,7 +73,7 @@ namespace DrawSomething
 
         public static string getsenderusername(string uid)
         {
-            string url = @"http://59.65.171.223/~zhaoyulee/drawsomething/index.php/User/getsenderusername?uid=" + uid;
+            string url = @"http://hackecho.com/drawsomething/index.php/User/getsenderusername?uid=" + uid;
             HttpWebRequest webrequest = (HttpWebRequest)HttpWebRequest.Create(url);
             HttpWebResponse webreponse = (HttpWebResponse)webrequest.GetResponse();
             Stream stream = webreponse.GetResponseStream();
@@ -92,7 +92,7 @@ namespace DrawSomething
 
         public static string getdrawxml(string uid)
         {
-            string url = @"http://59.65.171.223/~zhaoyulee/drawsomething/index.php/User/getmydrawxml?uid=" + uid;
+            string url = @"http://hackecho.com/drawsomething/index.php/User/getmydrawxml?uid=" + uid;
             System.Net.WebRequest wReq = System.Net.WebRequest.Create(url);
             System.Net.WebResponse wResp = wReq.GetResponse();
             System.IO.Stream respStream = wResp.GetResponseStream();
@@ -103,7 +103,7 @@ namespace DrawSomething
         //猜对后设置为已猜(默认设置的是表里第一条数据，因此不用where检索qid)
         public static bool setQuenuDone(string uid)
         {
-            string url = @"http://59.65.171.223/~zhaoyulee/drawsomething/index.php/Drawinfo/setquenudone?uid=" + uid;
+            string url = @"http://hackecho.com/drawsomething/index.php/Drawinfo/setquenudone?uid=" + uid;
             HttpWebRequest webrequest = (HttpWebRequest)HttpWebRequest.Create(url);
             HttpWebResponse webreponse = (HttpWebResponse)webrequest.GetResponse();
             Stream stream = webreponse.GetResponseStream();
@@ -130,7 +130,7 @@ namespace DrawSomething
         //更新自己的分数
         public static bool updatemyscore(string uid, string score)
         {
-            string url = @"http://59.65.171.223/~zhaoyulee/drawsomething/index.php/user/updatemyscore?uid=" + uid + @"&score=" + score;
+            string url = @"http://hackecho.com/drawsomething/index.php/user/updatemyscore?uid=" + uid + @"&score=" + score;
             HttpWebRequest webrequest = (HttpWebRequest)HttpWebRequest.Create(url);
             HttpWebResponse webreponse = (HttpWebResponse)webrequest.GetResponse();
             Stream stream = webreponse.GetResponseStream();
@@ -157,7 +157,7 @@ namespace DrawSomething
         //得到排行榜
         public static string getTopList()
         {
-            string url = @"http://59.65.171.223/~zhaoyulee/drawsomething/index.php/Util/gettoplist";
+            string url = @"http://hackecho.com/drawsomething/index.php/Util/gettoplist";
             System.Net.WebRequest wReq = System.Net.WebRequest.Create(url);
             System.Net.WebResponse wResp = wReq.GetResponse();
             System.IO.Stream respStream = wResp.GetResponseStream();

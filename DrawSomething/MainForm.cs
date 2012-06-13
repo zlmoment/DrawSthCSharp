@@ -230,7 +230,7 @@ namespace DrawSomething
 
                 Encoding encode = Encoding.GetEncoding("utf-8");
                 string postData = "sender_uid=" + userModel.uid + "&receiver_uid=" + f_userModel.uid + "&drawthing=" + drawthing + "&xmlbody=" + xmlbody;
-                string strURL = @"http://59.65.171.223/~zhaoyulee/drawsomething/index.php/drawinfo/addnewdraw";
+                string strURL = @"http://hackecho.com/drawsomething/index.php/drawinfo/addnewdraw";
 
                 byte[] data = encode.GetBytes(postData);
                 HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(strURL);
@@ -322,12 +322,18 @@ namespace DrawSomething
                             }
                             else
                             {
+                                this.panel1.Visible = false;
+                                this.panel2.Visible = false;
                                 this.panel3.Visible = true;
+                                this.panel4.Visible = false;
                             }
                         }
                         else
                         {
+                            this.panel1.Visible = false;
+                            this.panel2.Visible = false;
                             this.panel3.Visible = true;
+                            this.panel4.Visible = false;
                         }
                     }
                 }

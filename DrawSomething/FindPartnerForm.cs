@@ -33,7 +33,7 @@ namespace DrawSomething
             } 
             else
             {
-                string url = @"http://59.65.171.223/~zhaoyulee/drawsomething/index.php/User/findpartner?username=" + friend_username;
+                string url = @"http://hackecho.com/drawsomething/index.php/User/findpartner?username=" + friend_username;
                 HttpWebRequest webrequest = (HttpWebRequest)HttpWebRequest.Create(url);
                 HttpWebResponse webreponse = (HttpWebResponse)webrequest.GetResponse();
                 Stream stream = webreponse.GetResponseStream();

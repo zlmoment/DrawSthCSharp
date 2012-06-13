@@ -46,6 +46,7 @@
             this.label_friendinfo = new System.Windows.Forms.Label();
             this.label_score = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label_senderinfo = new System.Windows.Forms.Label();
             this.button9 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -58,7 +59,6 @@
             this.button12 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.button13 = new System.Windows.Forms.Button();
-            this.label_senderinfo = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.panel2.SuspendLayout();
@@ -237,6 +237,15 @@
             this.panel2.Size = new System.Drawing.Size(709, 63);
             this.panel2.TabIndex = 8;
             // 
+            // label_senderinfo
+            // 
+            this.label_senderinfo.AutoSize = true;
+            this.label_senderinfo.Location = new System.Drawing.Point(105, 26);
+            this.label_senderinfo.Name = "label_senderinfo";
+            this.label_senderinfo.Size = new System.Drawing.Size(101, 12);
+            this.label_senderinfo.TabIndex = 4;
+            this.label_senderinfo.Text = "label_senderinfo";
+            // 
             // button9
             // 
             this.button9.Location = new System.Drawing.Point(8, 17);
@@ -351,31 +360,22 @@
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
-            // label_senderinfo
-            // 
-            this.label_senderinfo.AutoSize = true;
-            this.label_senderinfo.Location = new System.Drawing.Point(105, 26);
-            this.label_senderinfo.Name = "label_senderinfo";
-            this.label_senderinfo.Size = new System.Drawing.Size(101, 12);
-            this.label_senderinfo.TabIndex = 4;
-            this.label_senderinfo.Text = "label_senderinfo";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(777, 539);
-            this.Controls.Add(this.panel2);
             this.Controls.Add(this.label_score);
             this.Controls.Add(this.label_friendinfo);
             this.Controls.Add(this.mainPictureBox);
             this.Controls.Add(this.label_status);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
+            this.Controls.Add(this.panel2);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;

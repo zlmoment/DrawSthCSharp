@@ -34,7 +34,7 @@ namespace DrawSomething
             } 
             else
             {
-                string url = @"http://59.65.171.223/~zhaoyulee/drawsomething/index.php/User/addnew?username=" + username + @"&password=" + password;
+                string url = @"http://hackecho.com/drawsomething/index.php/User/addnew?username=" + username + @"&password=" + password;
                 HttpWebRequest webrequest = (HttpWebRequest)HttpWebRequest.Create(url);
                 HttpWebResponse webreponse = (HttpWebResponse)webrequest.GetResponse();
                 Stream stream = webreponse.GetResponseStream();
