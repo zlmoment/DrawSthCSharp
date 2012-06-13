@@ -30,16 +30,20 @@ namespace DrawSomething
         public int penWidth;
         public Point currentPoint;
 
-        public TraceToDraw(Timer timer2, PictureBox mainPictureBox)
+        private string uid;
+
+        public TraceToDraw(Timer timer2, PictureBox mainPictureBox, string uid)
         {
             this.timer2 = timer2;
             this.mainPictureBox = mainPictureBox;
+            this.uid = uid;
             lines = new List<Line>();
         }
 
         public void start()
         {
             doc = new XPathDocument(System.Environment.CurrentDirectory.ToString() + "\\Trace.xml");
+            //doc = new XPathDocument(Util.getdrawxml(uid));
             nav = doc.CreateNavigator();
             ite = nav.Select("//Section");
 

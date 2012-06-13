@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Net;
+using System.IO;
 
 namespace DrawSomething
 {
@@ -23,11 +25,32 @@ namespace DrawSomething
         private TraceToXML traceToXML;
 
         private TraceToDraw traceToDraw;
-        
-        public MainForm()
+
+        private string drawthing;
+        private UserModel userModel;
+        private UserModel f_userModel;
+
+        public MainForm(UserModel userModel, UserModel f_userModel, string drawthing, string gameMode)
         {
             InitializeComponent();
             lines = new List<Line>();
+            this.userModel = userModel;
+            this.f_userModel = f_userModel;
+            this.drawthing = drawthing;
+            if (gameMode == "guess")
+            {
+                this.label_friendinfo.Text = "您正在猜，字符长度为 "+drawthing.Length.ToString() + " ，猜对可得10分。";
+                this.label_score.Text = userModel.score;
+                this.panel1.Visible = false;
+                this.panel2.Visible = true;
+            } 
+            else
+            {
+                this.label_friendinfo.Text = "您正在画 " + drawthing + " 给 " + f_userModel.username;
+                this.label_score.Text = userModel.score;
+                this.panel1.Visible = true;
+                this.panel2.Visible = false;
+            }
         }
 
 
@@ -127,13 +150,22 @@ namespace DrawSomething
             this.traceTime = 0;
             this.drawingLine = null;
             this.lines = null;
-            MessageBox.Show("finish");
+
+            //开始发送到服务器
+            bool result = this.sendToServerPost();
+            if (result == true)
+            {
+                MessageBox.Show("恭喜，发送成功！");
+            }
+            else
+            {
+                MessageBox.Show("失败，请检查网络连接。");
+            }
         }
 
         //启动用于记录轨迹的定时器
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //this.mainPictureBox.Refresh();
             this.mainPictureBox.Refresh();
             traceTime += timer1.Interval;
             if (isTracingNow == true)
@@ -162,8 +194,72 @@ namespace DrawSomething
         //退出程序
         private void button2_Click(object sender, EventArgs e)
         {
-            traceToDraw = new TraceToDraw(this.timer2, this.mainPictureBox);
+            
+        }
+
+        private bool sendToServerPost()
+        {
+            try
+            {
+                string xmlbody = File.ReadAllText(System.Environment.CurrentDirectory.ToString() + "\\Trace.xml");
+
+                Encoding encode = Encoding.GetEncoding("utf-8");
+                string postData = "sender_uid=" + userModel.uid + "&receiver_uid=" + f_userModel.uid + "&drawthing=" + drawthing + "&xmlbody=" + xmlbody;
+                string strURL = @"http://172.28.11.123/~zhaoyulee/drawsomething/index.php/drawinfo/addnewdraw";
+
+                byte[] data = encode.GetBytes(postData);
+                HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(strURL);
+                myRequest.Method = "POST";
+                myRequest.ContentType = "application/x-www-form-urlencoded"; 
+                myRequest.ContentLength = data.Length;
+                using (Stream reqStream = myRequest.GetRequestStream())
+                {
+                    reqStream.Write(data, 0, data.Length);
+                }
+                using (WebResponse wr = myRequest.GetResponse())
+                {
+                    Stream stream = wr.GetResponseStream();
+                    byte[] rsByte = new Byte[wr.ContentLength];
+                    stream.Read(rsByte, 0, (int)wr.ContentLength);
+                    string result = System.Text.Encoding.UTF8.GetString(rsByte, 0, rsByte.Length).ToString();
+                    if (result == "true")
+                    {
+                        return true;
+                    } 
+                    else
+                    {
+                        return false;
+                    }
+                } 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("异常：失败。"+ex.Message);
+                return false;
+            }
+
+        }
+
+        //开始绘制
+        private void button9_Click(object sender, EventArgs e)
+        {
+            traceToDraw = new TraceToDraw(this.timer2, this.mainPictureBox, userModel.uid);
             traceToDraw.start();
+        }
+
+        //猜测答案按钮
+        private void button8_Click(object sender, EventArgs e)
+        {
+            string myAnswer = this.textBox1.Text;
+            if (myAnswer == drawthing)
+            {
+                MessageBox.Show("猜对了！");
+            } 
+            else
+            {
+                MessageBox.Show("猜错了，请重试。");
+                this.textBox1.Focus();
+            }
         }
 
     }

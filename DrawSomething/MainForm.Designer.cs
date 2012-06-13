@@ -43,8 +43,16 @@
             this.label_status = new System.Windows.Forms.Label();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.mainPictureBox = new System.Windows.Forms.PictureBox();
+            this.label_friendinfo = new System.Windows.Forms.Label();
+            this.label_score = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -98,7 +106,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 5;
-            this.comboBox1.Text = "选择比刷粗细";
+            this.comboBox1.Text = "选择笔刷粗细";
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // button7
@@ -162,7 +170,7 @@
             this.label_status.AutoSize = true;
             this.label_status.BackColor = System.Drawing.Color.Transparent;
             this.label_status.ForeColor = System.Drawing.Color.Black;
-            this.label_status.Location = new System.Drawing.Point(28, 22);
+            this.label_status.Location = new System.Drawing.Point(94, 35);
             this.label_status.Name = "label_status";
             this.label_status.Size = new System.Drawing.Size(53, 12);
             this.label_status.TabIndex = 4;
@@ -179,7 +187,7 @@
             this.mainPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.mainPictureBox.Location = new System.Drawing.Point(30, 57);
             this.mainPictureBox.Name = "mainPictureBox";
-            this.mainPictureBox.Size = new System.Drawing.Size(704, 359);
+            this.mainPictureBox.Size = new System.Drawing.Size(709, 359);
             this.mainPictureBox.TabIndex = 5;
             this.mainPictureBox.TabStop = false;
             this.mainPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.mainPictureBox_Paint);
@@ -187,12 +195,81 @@
             this.mainPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mainPictureBox_MouseMove);
             this.mainPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mainPictureBox_MouseUp);
             // 
+            // label_friendinfo
+            // 
+            this.label_friendinfo.AutoSize = true;
+            this.label_friendinfo.Location = new System.Drawing.Point(94, 17);
+            this.label_friendinfo.Name = "label_friendinfo";
+            this.label_friendinfo.Size = new System.Drawing.Size(41, 12);
+            this.label_friendinfo.TabIndex = 6;
+            this.label_friendinfo.Text = "label1";
+            // 
+            // label_score
+            // 
+            this.label_score.AutoSize = true;
+            this.label_score.Font = new System.Drawing.Font("微软雅黑", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_score.Location = new System.Drawing.Point(32, 12);
+            this.label_score.Name = "label_score";
+            this.label_score.Size = new System.Drawing.Size(56, 41);
+            this.label_score.TabIndex = 7;
+            this.label_score.Text = "00";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.button9);
+            this.panel2.Controls.Add(this.button8);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.textBox1);
+            this.panel2.Location = new System.Drawing.Point(30, 435);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(709, 63);
+            this.panel2.TabIndex = 8;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(456, 22);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(151, 21);
+            this.textBox1.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(363, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(77, 12);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "你的猜测是：";
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(622, 22);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 2;
+            this.button8.Text = "对吗？";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(12, 22);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(91, 23);
+            this.button9.TabIndex = 3;
+            this.button9.Text = "开始绘制";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(777, 539);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.label_score);
+            this.Controls.Add(this.label_friendinfo);
             this.Controls.Add(this.mainPictureBox);
             this.Controls.Add(this.label_status);
             this.Controls.Add(this.panel1);
@@ -208,6 +285,8 @@
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -229,5 +308,12 @@
         private System.Windows.Forms.Label label_status;
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.PictureBox mainPictureBox;
+        private System.Windows.Forms.Label label_friendinfo;
+        private System.Windows.Forms.Label label_score;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button9;
     }
 }
