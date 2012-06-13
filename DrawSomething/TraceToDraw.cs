@@ -17,7 +17,7 @@ namespace DrawSomething
         public List<Line> lines;
 
         private Timer timer2;
-        private Panel mainPanel;
+        private PictureBox mainPictureBox;
 
         private XPathDocument doc;
         private XPathNavigator nav;
@@ -30,10 +30,10 @@ namespace DrawSomething
         public int penWidth;
         public Point currentPoint;
 
-        public TraceToDraw(Timer timer2, Panel mainPanel)
+        public TraceToDraw(Timer timer2, PictureBox mainPictureBox)
         {
             this.timer2 = timer2;
-            this.mainPanel = mainPanel;
+            this.mainPictureBox = mainPictureBox;
             lines = new List<Line>();
         }
 

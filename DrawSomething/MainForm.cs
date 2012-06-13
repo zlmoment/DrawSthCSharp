@@ -30,7 +30,8 @@ namespace DrawSomething
             lines = new List<Line>();
         }
 
-        private void mainPanel_MouseMove(object sender, MouseEventArgs e)
+
+        private void mainPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             string x_point = e.X.ToString();
             string y_point = e.Y.ToString();
@@ -43,11 +44,12 @@ namespace DrawSomething
             }
         }
 
-        private void mainPanel_MouseDown(object sender, MouseEventArgs e)
+        private void mainPictureBox_MouseDown(object sender, MouseEventArgs e)
         {
             //如果首次点击鼠标，打开计时器
             if (this.timer1.Enabled == false)
             {
+                this.traceTime = 0;
                 this.timer1.Enabled = true;
                 Point beginPoint = new Point(e.X, e.Y);
                 traceToXML = new TraceToXML(beginPoint, penColor.ToArgb().ToString(), penWidth.ToString());
@@ -57,7 +59,7 @@ namespace DrawSomething
             {
                 isTracingNow = true;
                 this.label_status.Text = "正在记录";
-                traceToXML.addNewSection(penColor.ToArgb().ToString(),penWidth.ToString());
+                traceToXML.addNewSection(penColor.ToArgb().ToString(), penWidth.ToString());
             }
 
             if (e.Button == MouseButtons.Left)
@@ -70,7 +72,7 @@ namespace DrawSomething
             }
         }
 
-        private void mainPanel_MouseUp(object sender, MouseEventArgs e)
+        private void mainPictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             if (isTracingNow == true)
             {
@@ -79,13 +81,14 @@ namespace DrawSomething
             }
         }
 
-        private void mainPanel_Paint(object sender, PaintEventArgs e)
+        private void mainPictureBox_Paint(object sender, PaintEventArgs e)
         {
             foreach (var line in lines)
             {
                 line.Draw(e.Graphics);
             }
         }
+
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
@@ -106,7 +109,7 @@ namespace DrawSomething
             this.penWidth = int.Parse(this.comboBox1.SelectedItem.ToString());
         }
 
-        //设置主form的双缓冲，防止panel闪烁，但效果不明显
+        //设置主form的双缓冲，防止picturebox闪烁
         private void MainForm_Load(object sender, EventArgs e)
         {
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -125,13 +128,13 @@ namespace DrawSomething
             this.drawingLine = null;
             this.lines = null;
             MessageBox.Show("finish");
-            //MessageBox.Show(System.Environment.CurrentDirectory.ToString());
         }
 
         //启动用于记录轨迹的定时器
         private void timer1_Tick(object sender, EventArgs e)
         {
-            this.mainPanel.Refresh();
+            //this.mainPictureBox.Refresh();
+            this.mainPictureBox.Refresh();
             traceTime += timer1.Interval;
             if (isTracingNow == true)
             {
@@ -142,24 +145,24 @@ namespace DrawSomething
         //用于还原绘图过程的定时器
         private void timer2_Tick(object sender, EventArgs e)
         {
-            
             traceToDraw.drawit(traceTime.ToString());
             traceTime += timer2.Interval;
             this.drawingLine = traceToDraw.drawingLine;
             this.lines = traceToDraw.lines;
-            this.mainPanel.Refresh();
+            this.mainPictureBox.Refresh();
         }
 
         //排行榜
         private void button1_Click(object sender, EventArgs e)
         {
-
+            ToplistForm toplistForm = new ToplistForm();
+            toplistForm.ShowDialog();
         }
 
         //退出程序
         private void button2_Click(object sender, EventArgs e)
         {
-            traceToDraw = new TraceToDraw(this.timer2, this.mainPanel);
+            traceToDraw = new TraceToDraw(this.timer2, this.mainPictureBox);
             traceToDraw.start();
         }
 
