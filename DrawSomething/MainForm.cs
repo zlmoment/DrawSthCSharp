@@ -17,8 +17,11 @@ namespace DrawSomething
         private List<Line> lines;
 
         private Color penColor = Color.Black;
-        private float penWidth = 1;
+        private Color penColorRecord = Color.Black;
+        private float penWidth = 4;
+        private float penWidthRecord = 4;
 
+        private bool isPainting = false;
         private bool isTracingNow = false;
         private Point pointNow;
         private int traceTime = 0;
@@ -34,6 +37,8 @@ namespace DrawSomething
         public MainForm(UserModel userModel, UserModel f_userModel, string drawthing, string gameModeStr)
         {
             InitializeComponent();
+            if (this.timer1.Enabled == false)
+                button6.Enabled = false;
             lines = new List<Line>();
             this.userModel = userModel;
             this.f_userModel = f_userModel;
@@ -67,59 +72,76 @@ namespace DrawSomething
 
         private void mainPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            if (gameMode == "draw")
+            if (isPainting)
             {
-                string x_point = e.X.ToString();
-                string y_point = e.Y.ToString();
-
-                if (e.Button == MouseButtons.Left)
+                if (gameMode == "draw")
                 {
-                    pointNow = new Point(e.X, e.Y);
-                    drawingLine.Add(pointNow);
-                    Invalidate();
+                    string x_point = e.X.ToString();
+                    string y_point = e.Y.ToString();
+
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        pointNow = new Point(e.X, e.Y);
+                        drawingLine.Add(pointNow);
+                        Invalidate();
+                    }
                 }
             }
+            
         }
 
         private void mainPictureBox_MouseDown(object sender, MouseEventArgs e)
         {
-            if (gameMode == "draw")
+            if (isPainting)
             {
-                //如果首次点击鼠标，打开计时器
-                if (this.timer1.Enabled == false)
+                if (gameMode == "draw")
                 {
-                    this.traceTime = 0;
-                    this.timer1.Enabled = true;
-                    Point beginPoint = new Point(e.X, e.Y);
-                    traceToXML = new TraceToXML(beginPoint, penColor.ToArgb().ToString(), penWidth.ToString());
-                }
+                    //如果首次点击鼠标，打开计时器
+                    if (this.timer1.Enabled == false)
+                    {
+                        this.traceTime = 0;
+                        this.timer1.Enabled = true;
+                        Point beginPoint = new Point(e.X, e.Y);
+                        traceToXML = new TraceToXML(beginPoint, penColor.ToArgb().ToString(), penWidth.ToString());
+                    }
 
-                if (isTracingNow == false)
-                {
-                    isTracingNow = true;
-                    this.label_status.Text = "正在记录";
-                    traceToXML.addNewSection(penColor.ToArgb().ToString(), penWidth.ToString());
-                }
+                    if (isTracingNow == false)
+                    {
+                        isTracingNow = true;
+                        this.label_status.Text = "正在记录";
+                        traceToXML.addNewSection(penColor.ToArgb().ToString(), penWidth.ToString());
+                    }
 
-                if (e.Button == MouseButtons.Left)
-                {
-                    pointNow = new Point(e.X, e.Y);
-                    drawingLine = new Line(pointNow);
-                    drawingLine.penColor = this.penColor;
-                    drawingLine.penWidth = this.penWidth;
-                    lines.Add(drawingLine);
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        pointNow = new Point(e.X, e.Y);
+                        drawingLine = new Line(pointNow);
+                        drawingLine.penColor = this.penColor;
+                        drawingLine.penWidth = this.penWidth;
+                        lines.Add(drawingLine);
+                    }
+
+                    this.button6.Enabled = true;
                 }
             }
+            else
+            {
+                MessageBox.Show("请点击画笔工具开始绘图。");
+            }
+            
         }
 
         private void mainPictureBox_MouseUp(object sender, MouseEventArgs e)
         {
-            if (gameMode == "draw")
+            if (isPainting)
             {
-                if (isTracingNow == true)
+                if (gameMode == "draw")
                 {
-                    isTracingNow = false;
-                    this.label_status.Text = "结束记录";
+                    if (isTracingNow == true)
+                    {
+                        isTracingNow = false;
+                        this.label_status.Text = "结束记录";
+                    }
                 }
             }
         }
@@ -149,7 +171,23 @@ namespace DrawSomething
         //设置粗细
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.penWidth = int.Parse(this.comboBox1.SelectedItem.ToString());
+            if (this.comboBox1.SelectedItem.ToString().Equals("细"))
+                this.penWidth = 4;
+            else if (this.comboBox1.SelectedItem.ToString().Equals("中等"))
+                this.penWidth = 12;
+            else if (this.comboBox1.SelectedItem.ToString().Equals("粗"))
+                this.penWidth = 23;
+
+            if (button5.Enabled == false)
+            {
+                if (this.penWidth == 4)
+                    this.mainPictureBox.Cursor = new Cursor(GetType(), "Eraser_thin.cur");
+                else if (this.penWidth == 12)
+                    this.mainPictureBox.Cursor = new Cursor(GetType(), "Eraser_middle.cur");
+                else 
+                    this.mainPictureBox.Cursor = new Cursor(GetType(), "Eraser_thick.cur");
+            }                
+            //this.penWidth = int.Parse(this.comboBox1.SelectedItem.ToString());
         }
 
         //设置主form的双缓冲，防止picturebox闪烁
@@ -383,6 +421,51 @@ namespace DrawSomething
             this.Dispose();
             FindPartnerForm findPartnerForm = new FindPartnerForm(userModel);
             findPartnerForm.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            isPainting = true;
+            button4.Enabled = false;
+            button5.Enabled = true;
+            button4.BackgroundImage = global::DrawSomething.Properties.Resources.brush_chosen;
+            button5.BackgroundImage = global::DrawSomething.Properties.Resources.eraser_v3;
+
+            this.penColor = this.penColorRecord;
+            this.penWidth = this.penWidthRecord;
+            this.button7.BackColor = this.penColor;
+            if (this.penWidth == 4)
+                this.comboBox1.SelectedIndex = 0;
+            else if (this.penWidth == 12)
+                this.comboBox1.SelectedIndex = 1;
+            else
+                this.comboBox1.SelectedIndex = 2;
+            mainPictureBox.Cursor = Cursors.Cross;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {            
+            button4.Enabled = true;
+            button4.BackgroundImage = global::DrawSomething.Properties.Resources.brush;
+            button5.Enabled = false;
+            button5.BackgroundImage = global::DrawSomething.Properties.Resources.eraser_chosen;
+
+            this.penColorRecord = this.penColor;
+            this.penWidthRecord = this.penWidth;
+            this.penColor = Color.White;
+            this.penWidth = 4;
+            this.button7.BackColor = this.penColor;
+            this.comboBox1.SelectedIndex = 0;
+            Cursor myCursor = new Cursor(GetType(), "Eraser_thin.cur");
+            mainPictureBox.Cursor = myCursor;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (lines.Count != 0)
+                lines.RemoveAt(lines.Count - 1);
+            if (lines.Count == 0)
+                button6.Enabled = false;
         }
     }
 }

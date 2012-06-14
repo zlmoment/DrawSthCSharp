@@ -130,6 +130,31 @@
   <ItemGroup>
     <None Include="Resources\emblem_art2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\brush.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\brush_chosen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\eraser-v3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\undo256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\eraser_chosen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\success.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Eraser_thin.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Eraser_middle.cur" />
+    <EmbeddedResource Include="Eraser_thick.cur" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
